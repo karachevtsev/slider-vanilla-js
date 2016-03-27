@@ -19,8 +19,9 @@ function Slider(selector, options) {
             currentSlideIndex = imagesCount - 1;
             return;
         };
+
         currentSlideIndex--;
-        // console.log(currentSlideIndex);
+        console.log(currentSlideIndex);
     };
 
     this.nextSlide = function() {
@@ -28,8 +29,9 @@ function Slider(selector, options) {
             currentSlideIndex = 0;
             return;
         };
+
         currentSlideIndex++;
-        // console.log(currentSlideIndex);
+        console.log(currentSlideIndex);
     };
 
     prevSliderNode.onclick = function(e) {
@@ -41,7 +43,7 @@ function Slider(selector, options) {
 
     nextSliderNode.onclick = function(e) {
         e.preventDefault();
-        _self.prevSlide();
+        _self.nextSlide();
         // console.log('Next');
         _self._render();
     };
@@ -50,6 +52,24 @@ function Slider(selector, options) {
     this._render = function() {
         var directionStyle = (options.direction === 'vertical') ? 'marginTop' : 'marginLeft';
         sliderImagesNode.style[directionStyle] = -(currentSlideIndex * slideSize) + 'px';
-        console.log('Render works!');
-    }
+        // console.log('Render works!');
+        paginationNode.querySelector('.active').classList.remove('active');
+        paginationNode.children[currentSlideIndex].querySelector('a').classList.add('active');
+         // Controllers visibility:
+        prevSliderNode.style.visibility = (currentSlideIndex === 0) ? 'hidden' : '';
+        nextSliderNode.style.visibility = (currentSlideIndex === imagesCount - 1) ? 'hidden' : ''
+    };
+
+    // Paginator handling:
+    paginationNode.onclick = function(e) {
+        e.preventDefault();
+        var link = e.target;
+        if (link.tagName != 'A') {
+            return;
+        };
+
+        currentSlideIndex = +link.dataset['slider__item'];
+        _self._render();
+        // console.log(e.target);
+    };
 };
