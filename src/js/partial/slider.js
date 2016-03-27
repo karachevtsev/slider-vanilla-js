@@ -13,7 +13,7 @@ function Slider(selector, options) {
         imagesCount       = sliderImagesNode.children.length,
         slideSize         = sliderImagesNode[(options.direction === 'vertical') ? 'offsetHeight' : 'offsetWidth'];
 
-    // Controllers
+    // Controllers foк slider
     this.prevSlide = function() {
         if (currentSlideIndex === 0) {
             currentSlideIndex = imagesCount - 1;
@@ -56,13 +56,14 @@ function Slider(selector, options) {
         paginationNode.querySelector('.active').classList.remove('active');
         paginationNode.children[currentSlideIndex].querySelector('a').classList.add('active');
          // Controllers visibility:
-        prevSliderNode.style.visibility = (currentSlideIndex === 0) ? 'hidden' : '';
-        nextSliderNode.style.visibility = (currentSlideIndex === imagesCount - 1) ? 'hidden' : ''
+        // prevSliderNode.style.visibility = (currentSlideIndex === 0) ? 'hidden' : '';
+        // nextSliderNode.style.visibility = (currentSlideIndex === imagesCount - 1) ? 'hidden' : ''
     };
 
-    // Paginator handling:
+    // Paginator handling
     paginationNode.onclick = function(e) {
         e.preventDefault();
+        // Use event delegation
         var link = e.target;
         if (link.tagName != 'A') {
             return;
@@ -72,4 +73,17 @@ function Slider(selector, options) {
         _self._render();
         // console.log(e.target);
     };
+
+    // Options handling
+    if (options.changeInterval) {
+        setInterval(function() {
+            _self.nextSlide();
+            _self._render();
+        }, options.changeInterval)
+    };
+    if (options.direction === 'vertical') {
+        sliderImagesNode.style.whiteSpace = 'normal';
+    };
+
+    sliderImagesNode.style.transition = 'margin ease-out .5s';
 };
