@@ -19,6 +19,7 @@ function Slider(selector, options) {
             return;
         };
         currentSlideIndex--;
+        // console.log(currentSlideIndex);
     };
 
     this.nextSlide = function() {
@@ -27,6 +28,14 @@ function Slider(selector, options) {
             return;
         };
         currentSlideIndex++;
+        // console.log(currentSlideIndex);
     };
 
+    prevSliderNode.onclick = function(e) {
+        // console.log('Prev');
+    };
+
+    nextSliderNode.onclick = function(e) {
+        // console.log('Next');
+    };
 };
