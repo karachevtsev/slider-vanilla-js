@@ -1,5 +1,6 @@
 function Slider(selector, options) {
 
+    var _self = this;
     // DOM Nodes
     var sliderNode       = document.querySelector(selector),
         sliderImagesNode = sliderNode.querySelector('.slider__images-wrap'),
@@ -32,10 +33,23 @@ function Slider(selector, options) {
     };
 
     prevSliderNode.onclick = function(e) {
+        e.preventDefault();
+        _self.prevSlide();
         // console.log('Prev');
+        _self._render();
     };
 
     nextSliderNode.onclick = function(e) {
+        e.preventDefault();
+        _self.prevSlide();
         // console.log('Next');
+        _self._render();
     };
+
+    // Render method
+    this._render = function() {
+        var directionStyle = (options.direction === 'vertical') ? 'marginTop' : 'marginLeft';
+        sliderImagesNode.style[directionStyle] = -(currentSlideIndex * slideSize) + 'px';
+        console.log('Render works!');
+    }
 };
